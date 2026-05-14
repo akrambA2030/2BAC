@@ -1,0 +1,120 @@
+{
+  "entities": {
+    "User": {
+      "title": "User",
+      "description": "Student profile data and progress",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string" },
+        "displayName": { "type": "string" },
+        "email": { "type": "string" },
+        "photoURL": { "type": "string" },
+        "branch": { "type": "string", "enum": ["Sciences Mathématiques", "Sciences Physiques", "SVT", "Économie", "Literature"] },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "lastLogin": { "type": "string", "format": "date-time" }
+      },
+      "required": ["uid", "email"]
+    },
+    "Subject": {
+      "title": "Subject",
+      "description": "Educational subject (Math, Physics, etc.)",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "name": { "type": "string" },
+        "icon": { "type": "string" },
+        "color": { "type": "string" },
+        "branches": { "type": "array", "items": { "type": "string" } }
+      }
+    },
+    "Lesson": {
+      "title": "Lesson",
+      "description": "Specific lesson or chapter",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "subjectId": { "type": "string" },
+        "title": { "type": "string" },
+        "content": { "type": "string" },
+        "summary": { "type": "string" },
+        "videoUrl": { "type": "string" },
+        "pdfUrl": { "type": "string" },
+        "order": { "type": "number" }
+      }
+    },
+    "Exam": {
+      "title": "National Exam",
+      "description": "Previous national exam data",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "subjectId": { "type": "string" },
+        "year": { "type": "number" },
+        "session": { "type": "string", "enum": ["Normale", "Rattrapage"] },
+        "branch": { "type": "string" },
+        "pdfUrl": { "type": "string" },
+        "correctionUrl": { "type": "string" }
+      }
+    },
+    "Quiz": {
+      "title": "Quiz",
+      "description": "Set of MCQ questions",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "lessonId": { "type": "string" },
+        "title": { "type": "string" },
+        "questions": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "question": { "type": "string" },
+              "options": { "type": "array", "items": { "type": "string" } },
+              "correctIndex": { "type": "number" },
+              "explanation": { "type": "string" }
+            }
+          }
+        }
+      }
+    },
+    "UserProgress": {
+      "title": "User Progress",
+      "description": "Tracks student progress in lessons and quizzes",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string" },
+        "lessonId": { "type": "string" },
+        "completed": { "type": "boolean" },
+        "quizScore": { "type": "number" },
+        "lastViewed": { "type": "string", "format": "date-time" }
+      }
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": "User",
+      "description": "Individual student profile"
+    },
+    "/subjects/{subjectId}": {
+      "schema": "Subject",
+      "description": "List of subjects"
+    },
+    "/subjects/{subjectId}/lessons/{lessonId}": {
+      "schema": "Lesson",
+      "description": "Lessons within a subject"
+    },
+    "/subjects/{subjectId}/exams/{examId}": {
+      "schema": "Exam",
+      "description": "Exams for a subject"
+    },
+    "/quizzes/{quizId}": {
+      "schema": "Quiz",
+      "description": "Global quizzes"
+    },
+    "/users/{userId}/progress/{progressId}": {
+      "schema": "UserProgress",
+      "description": "Student's progress tracking"
+    }
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "name": "2BAC Academy Maroc",
+  "short_name": "2BAC Academy",
+  "description": "Plateforme d'apprentissage pour les étudiants du Bac au Maroc.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#2563eb",
+  "icons": [
+    {
+      "src": "https://cdn-icons-png.flaticon.com/512/2991/2991148.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
